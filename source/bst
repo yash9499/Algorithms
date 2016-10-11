@@ -1,0 +1,69 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct node{
+	int data;
+	struct node* left;
+	struct node* right;
+};
+void search(struct node* root,int y);
+struct node *newnode(int data);
+void preorder(struct node* root);
+struct node* create(struct node* root,int x);
+struct node* create(struct node* root,int data){
+	if(root==NULL)
+		root=newnode(data);
+	else if(data<=root->data)
+		root->left=create(root->left,data);
+	else if(data>root->data)
+		root->right=create(root->right,data);
+
+return root;	
+}
+struct node* newnode(int data){
+	struct node* root=(struct node*)malloc(sizeof(struct node));
+	root->data=data;
+	root->left=NULL;
+	root->right=NULL;
+	return root;
+}
+void search(struct node* root,int y){
+	if(root==NULL)
+	{
+		printf("Not found\n");
+		return;
+	}	
+	if(root->data == y)
+	{	printf("Found\n");
+		return;	
+	}
+	else if((root->data)<y)
+		search(root->right,y);
+	else if((root->data)>y)
+		search(root->left,y);
+}
+void preorder(struct node* root){
+	if(root==NULL)
+		return;
+	printf("%d  ",root->data);
+	preorder(root->left);
+	printf("Preorder traversal of Binary tree elements\n");
+	preorder(root->right);	
+}
+int main(void){
+	struct node* root=NULL;
+	int flag=1,y;
+	while(flag){
+		int x;
+		scanf("%d",&x);
+		root= create(root,x);
+		printf("Add more to BST if you want 1/0:\n");
+		scanf("%d",&flag);
+	}
+	printf("Enter elements to be searched\n");
+	scanf("%d",&y);
+	search(root,y);
+	preorder(root);
+	
+	
+return 0;
+}
